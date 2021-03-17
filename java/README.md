@@ -692,7 +692,7 @@ public class Buffer {
 
 ![](BlockingQueue.png)
 #### CountDownLatch
-```css
+```diff
 - (Thread safe)
 ```
 **`CountDownLatch`** is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where the main task can only start when all the required services hava started.
