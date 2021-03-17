@@ -36,7 +36,7 @@ The **Reference Data Types** will contain a memory address of variable value bec
 
 `String` - in Java are not terminate with a null character.
 
-`Class` - A class can only extend (subclass) one parent and  			implement more than one interface.
+`Class` - A class can only extend (subclass) one parent and              implement more than one interface.
 
 `Array` - The direct superclass of an array type is Object, and every array type implements the interface **_Clonable_** and **_java.io.Serializable_**.
 
@@ -82,7 +82,7 @@ class Autoboxing
     } 
 } 
 ```
-		
+        
 - **Unboxing** - conversion of Integer to int, Long to long, Double to double, etc.
 
 ```java
@@ -108,27 +108,27 @@ class Unboxing
     } 
 } 
 ```
-		
+        
 ###Good to know
 == works for Integer value in interval -128 to 127, Values between -128 and 127 are cached for reuse to optimise Autoboxing.
 
 - You can set upper bound greater than 127 using -XX:AutoBoxCacheMax=NEWVALUE
 
-```java	
+```java    
 public static void main(String[] args) {
-	
- 		Integer k = new Integer(10);
-      	Integer k1 = new Integer(10);
-      	
-      	Integer k2 = 127;
-      	Integer k3 = 127;
-      	
-      	Integer k4 = 129;
-      	Integet k5 = 129;
-      	
-      	System.out.println(k == k1);
-      	System.out.println(k2 == k3);
-      	System.out.println(k4 == k5);
+    
+         Integer k = new Integer(10);
+          Integer k1 = new Integer(10);
+          
+          Integer k2 = 127;
+          Integer k3 = 127;
+          
+          Integer k4 = 129;
+          Integet k5 = 129;
+          
+          System.out.println(k == k1);
+          System.out.println(k2 == k3);
+          System.out.println(k4 == k5);
 }
 ```
 `output:`
@@ -154,7 +154,7 @@ public class Main {
   public static void main(String[] args) {
     char myChar = 'A';
     int myInt = myChar; // Automatic casting: char to int
-	
+    
     System.out.println(myChar);      // Outputs A
     System.out.println(myInt);   // Outputs 65
   }
@@ -171,7 +171,7 @@ public class Main {
   public static void main(String[] args) {
     double myDouble = 9.78;
     int myInt = (int) myDouble; // Manual casting: double to int
-	
+    
     System.out.println(myDouble);   // Outputs 9.78
     System.out.println(myInt);      // Outputs 9
   }
@@ -179,16 +179,16 @@ public class Main {
 ```
 ### Type Casting (Object, Reference)
 1. **Upcasting (automatically)** -> Casting from a ***subclass*** to a _***superclass***_. 
-	- A reference variable can refer to an object if the object is of the same type as a variable or if it is a subtype
-	- Upcasting happens implicitly.
+    - A reference variable can refer to an object if the object is of the same type as a variable or if it is a subtype
+    - Upcasting happens implicitly.
 
 2. **Downcasting (manually)** -> Casting from a _***superclass***_ to a _***subclass***_.
-	- Downcasting is necessary to gain access to members specific to subclass.
-	- Downcasting is done using cast operator.
-	- To downcast an object safely, we need instanceof operator.
-	- If the real object doesn't match the type we downcast to, then ClassCastException will be thrown at runtime.
+    - Downcasting is necessary to gain access to members specific to subclass.
+    - Downcasting is done using cast operator.
+    - To downcast an object safely, we need instanceof operator.
+    - If the real object doesn't match the type we downcast to, then ClassCastException will be thrown at runtime.
 
-	
+    
 ### Good to know
 
 
@@ -197,16 +197,16 @@ public class Main {
 
 ### `Polymorphism` 
 Ability of OOPs languages to differentiate between entities with the same name efficiently.
-	
+    
 * Polymorphism in Java are mainly of 2 types:
-	* Overloading (supraincarcare) ***Compile-time, static polymorphism***
-	* Overriding (suprascriere) ***Run-time, dynamic polymorphism***
+    * Overloading (supraincarcare) ***Compile-time, static polymorphism***
+    * Overriding (suprascriere) ***Run-time, dynamic polymorphism***
 
 `Overloading` - We can change only number of args and types of args.
 We can change and return type only if return type isn't the only one difference between methods.
 
 `Overriding` -   It is the type of the object being referred to (not the type of the reference variable) that determines which version of an overridden method will be executed.
-		
+        
 * The _***access modifier***_ for an overriding method can allow more, but not less, access than the overridden method.
 * _***Final methods***_ can not be overridden.
 * _***Static methods***_ can not be overridden.( When you define a static method with same signature as a static method in base class, it is known as ***method hiding***)
@@ -223,23 +223,23 @@ It is the mechanism in java by which one class is allow to inherit the features(
 **Type of Inheritance** 
 
 1. `Single Inheritance` -> one superclass and one subclass.
-	
-	![](single.png)
+    
+    ![](single.png)
 
 2. ` Multilevel Inheritance` -> adsasd.
 
-	![](multilevel.png) 
-	
+    ![](multilevel.png) 
+    
 3. `Hierarchical Inheritance` -> one superclass and > 1 subclass.
 
 4. `Multiple Inheritance(Through Interfaces)` -> we can achieve multiple inheritances only through Interfaces.
-	
-	![](Multiple.png)
-	
+    
+    ![](Multiple.png)
+    
 5. `Hybrid Inheritance(Through Interfaces)` -> It is a mix of two or more of the above types of inheritance.
 
-	![](Hybrid.png)
-	
+    ![](Hybrid.png)
+    
 ### Good to know.
 
 * `Default superclass` - Except Object class, which has no superclass, **every class has one and only one direct superclass** (single inheritance). In the absence of any other explicit superclass, _***every class is implicitly a subclass of Object class***_.
@@ -273,10 +273,10 @@ In java, abstraction is achieved by ***interfaces***, and ***abstact classes***.
 * There ***can be no object of an abstract class***. That is, an abstract class can not be directly instantiated with the new operator.
 * ***Encapsulation is data hiding***(information hiding) while **Abstraction is detail hiding**(implementation hiding).
 * ***Advantages of Abstraction***.
-	
-	* It reduces the complexity of viewing the things.
-	* Avoids code duplication and increases reusability.
-	* Helps to increase security of an application or program as only important details are provided to the user.
+    
+    * It reduces the complexity of viewing the things.
+    * Avoids code duplication and increases reusability.
+    * Helps to increase security of an application or program as only important details are provided to the user.
 
 ### `Class`
 A class is a user defined blueprint or prototype from which objects are created. It represents the set of properties or methods that are common to all objects of one type.
@@ -293,9 +293,9 @@ It is a basic unit of Object-Oriented Programming and represents the real life e
 * `Checked` -> are checked at compile time. 
 * `Unchecked` -> are not checked at compile time.
 In Java exceptions under Error and RuntimeException classes ***_are unchecked_*** exceptions, everything else under throwable ***_is checked_***.
-			
-		ArithmeticException is an unchecked exception.
-		
+            
+        ArithmeticException is an unchecked exception.
+        
 * If a client can reasonably be expected to recover from an exception, ***_make it a checked exception_***. If a client cannot do anything to recover from the exception, ***_make it an unchecked exception_***.
 
 * ***throw*** -> The flow of execution of the program stops immediately after the throw statement is executed and the nearest enclosing try block is checked to see if it has a catch statement that matches the type of exception. If it finds a match, controlled is transferred to that statement otherwise next enclosing try block is checked and so on. If no matching catch is found then the default exception handler will halt the program. 
@@ -330,11 +330,11 @@ class ThrowExcep
     }
 }
 ```
-		
+        
 Output: 
 
-	Caught inside fun().
-	Caught in main.
+    Caught inside fun().
+    Caught in main.
 * ***throws*** -> is a keyword in Java which is used in the signature of method to indicate that this method might throw one of the listed type exceptions.The caller to these methods has to handle the exception using a try-catch block.
 
 ```java
@@ -362,8 +362,8 @@ class ThrowsExecp
 
 Output: 
 
-	Inside fun().
-	caught in main.
+    Inside fun().
+    caught in main.
 ### Good to know
 
 `try, catch, finally` ->we can have multiple catch and only one finaly.
@@ -394,14 +394,14 @@ The ***_Collection interface (java.util.collection) and Map interface (java.util
 4. **`Queue Interface:`** This interface is dedicated to storing all the elements where the **_*order of the elements matter(FIFO)*_**.
 5. **`Deque Interface:`** Is a data structure where ***_we can add and remove the elements from both the ends of the queue_***.
 6. **`Set Interface:`** A set is an ***_unordered_*** collection of objects in which ***duplicate values cannot be stored***.
-	* **HashSet:** The objects are inserted based on their hashcode.
+    * **HashSet:** The objects are inserted based on their hashcode.
 
 7. **`Sorted Set Interface:`** This interface is very similar to the set interface. The only difference is that this interface ***_has extra methods that maintain the ordering of the elements_***.
-	* **TreeSet:** Objects in a TreeSet are stored in a sorted and ascending order
+    * **TreeSet:** Objects in a TreeSet are stored in a sorted and ascending order
 
 8. **`Map Interface:`** A map is a data structure which supports the key-value pair mapping for the data. This interface doesn;t support dupicate keys (same key cannot have multiple mappings).
-	* **HashMap:** To access a value in a HashMap, ***we must know its key***. HashMap uses a technique called **Hashing**. Hashing is a technique of converting a large String to small String that represents the same String so that the indexing and search ***operations are faster***.
-	
+    * **HashMap:** To access a value in a HashMap, ***we must know its key***. HashMap uses a technique called **Hashing**. Hashing is a technique of converting a large String to small String that represents the same String so that the indexing and search ***operations are faster***.
+    
 ## equals() and hashCode() methods
 * Class Object has implemented by default **`equals()`** and **`hashCode()`**
 * **`equals()`** -> Object class ***equals()*** method implementation returns true only when both the references are pointing to same object. 
@@ -410,22 +410,54 @@ The ***_Collection interface (java.util.collection) and Map interface (java.util
 * Map, Set, ... use **`equals()`** and **`hashCode()`** to don't alow duplicates.
 * `Map<Person> and Set<Person>` Class Person need to have custom method **`equals()`** and **`hashCode()`**
 * **Why we use equals() and hashCode()** -> hashCode() is faster then equals() we verify with 
-												hasCode() and if it is false then with equals.
+                                                hasCode() and if it is false then with equals.
 
-		If o1.equals(o2), then o1.hashCode() == o2.hashCode() should always be true.
-		If o1.hashCode() == o2.hashCode is true, it doesn’t mean that o1.equals(o2) will be true.
-		
-		
+        If o1.equals(o2), then o1.hashCode() == o2.hashCode() should always be true.
+        If o1.hashCode() == o2.hashCode is true, it doesn’t mean that o1.equals(o2) will be true.
+        
+        
 If you are planning to ***use a class as Hash table key***, then it’s must to override both equals() and hashCode() methods.
 
 * ***`hash collision`*** When two keys have same hash code.
 
-		# Contaract hashCode() equals()
-		  1) For two verified object we call hashCode() method
-		  		-> if hashCodes are differit => object are definitely differit!
-		  		-> if hashCodes are equals => object can be same or hash collision!
-		  							-> We call equals() for definitely answer.
+        # Contaract hashCode() equals()
+          1) For two verified object we call hashCode() method
+                  -> if hashCodes are differit => object are definitely differit!
+                  -> if hashCodes are equals => object can be same or hash collision!
+                                      -> We call equals() for definitely answer.
+                                      
+                                      
+                                      
+                                      
+##### Exemple of equals() and hashCode()
+```java                        
+class Person {
+    private int id;
+    private String name;
 
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (id != person.id) return false;
+        return name != null ? name.equals(person.name) : person.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+```
 ## Comparator and Comparable
 
 * **`Comparator ->`** used for sort element in a list, is second parameter for  Collections.sort() method.
@@ -438,8 +470,28 @@ Collections.sort(list, new Comparator<Person>() {
     }
    });
 ```
-	       
-*
+           
+* **`Comparable ->`** used for give natural ordering for a class. For Set we can't add element to TreeSet of my costom class if my class don't implement Comparable.
+
+```java
+class Person implements Comparable<Person> {
+    private int id;
+    private String name;
+
+    public Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    @Override
+    public int compareTo(Person o) {
+        return this.name.length() - o.getName().length();
+    }
+```
 
 ##Generics
 Generics ***means parameterized types***.
@@ -449,4 +501,243 @@ The idea is to allow type (Integer, Strign, ...etc, and user-defined types) to b
 1. **Code Reuse:** We can write a method/class/interface once and use for any type we want.
 2. **Type Safety:** Generics make errors to appear compile time than at run time.
 3. **Implementing generic algorithms:**
+
+
+##Multithreading
+
+**`Multithreading`** is a Java future that allows concurrent execution of two or more parts of program for maximum utilization of CPU. Each part of such program is called a thread. So, threads are light-weight processes within a process.
+
+`Threads` can be created by using two mechanisms:
+
+1. Extending the **Thread class**.
+2. Implementing the **Runnable Interface**.
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        // Extending the Thread class
+        MyThread myThread = new MyThread();
+        myThread.start();
+
+         //    Implementing the Runnable Interface 
+        Thread myThread1 = new Thread(new MyThreads());
+        myThread1.start();
+        
+        System.out.println("Hello from main Thread");
+    }
+}
+
+public class MyThread extends Thread {
+    @Override
+    public void run() {
+        System.out.println("Hello my friend ");
+
+    }
+}
+
+class MyThreads implements Runnable {
+    @Override
+    public void run() {
+        System.out.println("Hello my friend ");
+    }
+}
+``` 
+#### Race condition
+
+*     ***Race condition*** occurs when multiple threads read and write the same variable i.e.     they have access to some shared data and they try to change it at the same time. In such a     scenario threads are “racing” each other to access/change the data.
+
+#### Volatile
+* **`volatile`** keyword -> tell the compilet that the value of a variable must **never be cached** as its value may change outside of the scope of program itself.
+* Note that ***volatile should not be confused with static modifier***. Static variables are class members that are shared among all objects. There is only one copy of them in ***main memory.***
+
+#### Synchronized
+* **`synchronized`** keyword -> it need to be sure by some synchronization method that only one thread can access the resurce at a given point of time.
+* We can synchronizing task by using ***synchronized blocks*** that synchronized on same object.
+*  ***All synchronized blocks*** synchronized on the same object can only have one thread executing inside them at a time. ***All other threads attempting to enter the synchronized block*** are blocked until the thread inside the synchronized block exits the block.
+
+```java
+public class Main {
+    private int counter;
+    Object lock = new Object();
+    
+    public static void main(String[] args) throws InterruptedException {
+        Main main = new Main();
+        main.doWork();
+        System.out.println("Hello from main Thread");
+    }
+
+    public void increment() {
+        synchronized (lock) {
+            counter++;
+        }
+    }
+    
+    /*
+    public synchronized void increment() {
+        counter++;
+    }
+    */
+    
+    public void doWork() throws InterruptedException{
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10000; i++) {
+                    increment();
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10000; i++) {
+                    increment();
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+        System.out.println(counter);
+    }
+```
+
+#### Thread pool
+A ***`thread poll`*** reuses previously created threads to execute current tasks and offers a solution to the problem of thread cycle overhead and resource thrashing. Since the thread is already existing when the request arrives, the delay introduced by thread creation is eliminated, making the app more responsive.
+
+```java
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+
+        Work work = new Work();
+        for (int i = 0; i < 5; i++)
+            executorService.submit(work);
+
+        executorService.shutdown();
+
+        executorService.awaitTermination(1, TimeUnit.MINUTES);
+
+        System.out.println(work.list1.size());
+    }
+}
+
+class Work implements Runnable {
+    List<Integer> list1 = new ArrayList<>();
+
+
+    @Override
+    public void run() {
+        synchronized (this) {
+            for (int i = 0; i < 10000; i++)
+                list1.add(i);
+        }
+    }
+}
+```
+#### Producer Consumer
+In Computing, the producer-consumer problem (also known as the ***bounded-buffer problem***) is a classic exemple of a multi-process synchronization problem. The problem describes two processes, ***which share a common, fixed-size buffer used as a queue.***
+
+* Thre Producer's job is to generate data, put it into the buffer, and start again.
+* At the same time, the consumer is consuming the data (i.e. removing it from the buffer), one piece at time.
+
+* ***The problem can be resolved with ArrayBlockingQueue or with wait(), notify(), and synchronize*** that simulate an ArrayBlockingQueue.
+
+##### ArrayBlockingQueue
+```java
+ private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+```
+```java
+public class Buffer {
+	Queue queue;
+    int limit;
+
+    public Buffer(int size) {
+        queue = new LinkedList();
+        limit = size;
+    }
+
+    void put(int value) {
+        synchronized (this) {
+            while (queue.size() == limit) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            notify();
+            queue.add(value);
+        }
+    }
+
+    synchronized int get() {
+        while (queue.size() == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        notify();
+        return (int) queue.poll();
+    }
+}
+
+```
+
+![](BlockingQueue.png)
+#### CountDownLatch
+```dif
+- (Thread safe)
+```
+**`CountDownLatch`** is used to make sure that a task waits for other threads before it starts. To understand its application, let us consider a server where the main task can only start when all the required services hava started.
+
+***`Working of CountDownLatch`***: When we create an object of CountDownLatch, we specify the number of threads it should wait for, all such thread are required to do count down by calling ***`.countDown()`*** once they are completed or ready to the job. As soon as count reaches zero the waiting task starts runing.
+
+```java
+public class Test {
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+        for (int i = 0; i < 3; i++) {
+            executorService.submit(new Proccesor(i, countDownLatch));
+        }
+
+        executorService.shutdown();
+        for (int i = 0; i < 3; i++) {
+            countDownLatch.countDown();
+        }
+    }
+
+}
+
+
+class Proccesor implements Runnable {
+    private CountDownLatch countDownLatch;
+    private int id;
+
+    public Proccesor(int id, CountDownLatch countDownLatch) {
+        this.id = id;
+        this.countDownLatch = countDownLatch;
+    }
+    @Override
+    public void run() {
+        try {
+            Thread.sleep(3000);
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Thread with id = " + id + " Preceed");
+    }
+}
+```
 
