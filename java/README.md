@@ -741,3 +741,428 @@ class Proccesor implements Runnable {
 }
 ```
 
+#### Reentrant Lock
+
+The ***ReentrantLock*** is a better replacement for synchronization, which offers many features not provided by synchronized. However, the existence of these obvious benefits are not a good enough reason to always prefer ReentrantLock to synchronize. Instead, make the decision on the basis of whether you need the flexibility offered by a ReentrantLock.
+
+***Important Points:***
+
+1. One can forget to call the unlock() method in the finally block leading to bugs in the program. Ensure that the lock is released before the thread exits.
+
+2. The fairness parameter used to construct the lock object decreases the throughput of the program.
+
+```java
+	private Lock lock = new ReentrantLock();
+
+	lock.lock();
+	increment();
+	lock.unlock();
+```
+
+#### Semaphore
+
+A semaphore controls access to a shared resource through the use of a counter. If the counter is greater than zero, then access is allowed. If it is zero, then access is denied. What the counter is counting are permits that allow access to the shared resource. Thus, to access the resource, a thread must be granted a permit from the semaphore.
+
+										Working of semaphore
+
+In general, to use a semaphore, the thread that wants access to the shared resource tries to acquire a permit.
+
+If the semaphore’s count is greater than zero, then the thread acquires a permit, which causes the semaphore’s count to be decremented.
+Otherwise, the thread will be blocked until a permit can be acquired.
+When the thread no longer needs an access to the shared resource, it releases the permit, which causes the semaphore’s count to be incremented.
+If there is another thread waiting for a permit, then that thread will acquire a permit at that time.
+Java provide Semaphore class in java.util.concurrent package that implements this mechanism, so you don’t have to implement your own semaphores.
+
+```java
+public class Semf {
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(200);
+
+        Connection connection = Connection.getConnection();
+
+        for (int i = 0; i < 200; i++) {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        connection.doWork();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        executorService.shutdown();
+        executorService.awaitTermination(1, TimeUnit.DAYS);
+    }
+}
+
+class Connection {
+    // Singleton
+    private static Connection connection = new Connection();
+    private int connectionCount;
+    Semaphore semaphore = new Semaphore(10);
+
+    private Connection() {}
+
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public void doWork() throws InterruptedException {
+        try {
+            semaphore.acquire();
+            synchronized (this) {
+                connectionCount++;
+                System.out.println(connectionCount);
+            }
+            Thread.sleep(5000);
+
+            synchronized (this) {
+                connectionCount--;
+            }
+        } finally {
+            semaphore.release();
+        }
+    }
+}
+```
+
+#### Deadlock
+
+***synchronized*** keyword is used to make the class or method thread-safe which means only one thread can have lock of synchronized method and use it, other threads have to wait till the lock releases and anyone of them acquire that lock. 
+It is important to use if our program is running in multi-threaded environment where two or more threads execute simultaneously. But sometimes it also causes a problem which is called Deadlock. Below is a simple example of ***Deadlock condition***.
+
+![](deadlock.png)
+
+```java
+public class deadlock {
+    public static void main(String[] args) throws InterruptedException {
+        Runner runner = new Runner();
+
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runner.firstThread();
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runner.secondThread();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+
+        runner.finished();
+    }
+}
+
+class Runner {
+    private Account account1 = new Account();
+    private Account account2 = new Account();
+
+    private Lock lock1 = new ReentrantLock();
+    private Lock lock2 = new ReentrantLock();
+
+    public void firstThread() {
+        Random random = new Random();
+        for (int i = 0; i < 10000; i++) {
+            lock1.lock();
+            // first thread is here!
+            // second thread can't take this lock because he take lock2 from secondThread()
+            // ===============================DEADLOCK==================================
+            lock2.lock();
+            try {
+                Account.transfer(account1, account2, random.nextInt(100));
+            } finally {
+                lock1.unlock();
+                lock2.unlock();
+            }
+        }
+    }
+
+    public synchronized void secondThread() {
+        Random random = new Random();
+        for (int i = 0; i < 10000; i++) {
+            lock2.lock();
+            // second thread is here!
+            // first thread can't take this lock because he take lock1 from firstThread()
+            // ===============================DEADLOCK==================================
+            lock1.lock();
+            try {
+                Account.transfer(account2, account1, random.nextInt(100));
+            } finally {
+                lock1.unlock();
+                lock2.unlock();
+            }
+        }
+    }
+
+    public void finished() {
+        System.out.println("acc1 balance = " + account1.getBalance());
+        System.out.println("acc2 balance = " + account2.getBalance());
+        System.out.println("All acc balance = " + (account1.getBalance() + account2.getBalance()));
+    }
+}
+```
+
+Avoid deadlock with:
+
+```java
+ private void tackeLocks(Lock lock1, Lock lock2) {
+        boolean firstLockTaken = false;
+        boolean secondLockTaken = false;
+
+        while (true) {
+            try {
+                firstLockTaken = lock1.tryLock();
+                secondLockTaken = lock2.tryLock();
+            } finally {
+                if (firstLockTaken && secondLockTaken) {
+                    return;
+                }
+
+                if (firstLockTaken) {
+                    lock1.unlock();
+                }
+
+                if (secondLockTaken) {
+                    lock2.unlock();
+                }
+            }
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+```
+
+### Regular Expressions
+
+* Regular Expressions or Regex(in short) is an API for defining String patterns that can be used for searching, manipulating and editing a string in Java.
+* Email validation and passwords are few areas of strings where Regex are widely used to define the constraints.
+* Regex are provide under java.util.regex package. This consists of 3 classes and 1 interface.
+
+![](Regex.png)
+
+```java
+public class regex {
+    public static void main(String[] args) {
+        /**
+         *  \\d - one digit
+         *    + - one or more
+         *    * - zero or more
+         *    ? - zero or one
+         *    | - or (a | b) -> a or b (a | b | c | d)
+         *    [a-zA-Z] == \\w
+         *    [0-9] == \\d
+         *    [^abc] -> all simbols without a, b, c
+         *    . - all simbols
+         *  {2} - 2 simbols             ex : \\d{2} - 2 digits
+         * {2,} - 2 or more simbols     ex : \\w{2,} - 2 ore more character
+         * {2,4} - from 2 to 4 simbols  ex : \\d{2,4} - from 2 to 4 digits
+         */
+
+        String a = "91";
+        String b = "-91";
+        String c = "+91";
+
+        System.out.println(a.matches("(-|\\+)?\\d*"));  // true
+        System.out.println(b.matches("(-|\\+)?\\d*"));  // true
+        System.out.println(c.matches("(-|\\+)?\\d*"));  // true
+
+
+        String d = "Adsaas1ffgh33333ff1hhs1113aasfa3211241414";
+        System.out.println(d.matches("[a-zA-Z31]+(-|\\+)?\\d*"));   // true
+
+        String e = "hello";
+        System.out.println(e.matches("[^abc]*"));   // true
+
+        String url = "http://www.google.com";
+        String url2 = "https://www.yandex.ru";
+        System.out.println(url.matches("http(s)?://www\\..+\\.(com|ru)"));   // true
+        System.out.println(url2.matches("http(s)?://www\\..+\\.(com|ru)"));  // true
+
+        String f = "321";
+        String g = "41241241";
+        String h = "12231";
+        System.out.println(f.matches("\\d{3}"));    // true
+        System.out.println(f.matches("\\d{1,}"));   // true
+        System.out.println(f.matches("\\d{3,10}")); // true
+    }
+}
+```
+
+[Regex CheatSheet](https://regexlib.com/CheatSheet.aspx)
+
+#### Pattern and Matcher class
+
+```java
+public class regex {
+    public static void main(String[] args) {
+        String text = "Dear Sergiu,\n" +
+                "We know it takes a lot to submit an application, and we want you to know how much we truly appreciate your interest in UiPath! \n" +
+                "We've carefully reviewed your application, sergiu@yandex.ru and unfortunately it isn't a match for what we’re looking for this time around.\n" +
+                "If you applied for multiple positions, your other applications may still be moving forward.\n" +
+                "Please do not hesitate to keep in touch and reach out if we have another role you think could be a fit in the future." +
+                " In the meantime, we can connect on Facebook,LinkedIn & Twitter.\n" +
+                "Thank you again for babin@gmail.com considering UiPath, and we hope to be in touch soon!\n" +
+                "Have a nice day,\n" +
+                "UiPath Talent Acquisition Team\n";
+
+        Pattern pattern = Pattern.compile("\\w+@(gmail|yandex)\\.(com|ru)");
+
+        Matcher matcher = pattern.matcher(text);
+
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+
+    }
+}
+```
+
+### Lambda Expressions
+***Lambda expressions*** basically express instances of functional interfaces (An interface with single abstract method is called functional interface. An example is java.lang.Runnable). lambda expressions implement the only abstract function and therefore implement functional interfaces
+
+lambda expressions are added in Java 8 and provide below functionalities.
+
+* Enable to treat functionality as a method argument, or code as data.
+* A function that can be created without belonging to any class.
+* A lambda expression can be passed around as if it was an object and executed on demand.
+
+* With lambda expression we can make anonymous class with max one @Overriding class
+
+```java
+interface Executable {
+    int execute(String name, int x);
+}
+
+class Runeer {
+    public void run(Executable e) {
+        int a = e.execute("Sergiu", 22);
+        System.out.println(a);
+    }
+}
+
+public class regex {
+    public static void main(String[] args) {
+        Runeer runer = new Runeer();
+
+        runer.run(new Executable() {
+            @Override
+            public int execute(String name, int x) {
+                System.out.println("Hello " + name + " " + x);
+                System.out.println("Goodby");
+                return x + 20;
+            }
+        });
+        runer.run((name, year) -> year + 20);
+    }
+}
+```
+##### Comparator
+```java
+public class regex {
+    public static void main(String[] args) {
+        List<Integer> list = Arrays.asList(5,2,3,4,7,0);
+
+        System.out.println(list);
+
+        list.sort((o1, o2) -> o2 - o1);     // Comparator -> lambda expresion
+
+        System.out.println(list);
+    }
+}
+```
+
+#### Thread
+```java
+public class regex {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hello");
+            }
+        });
+
+        Thread thread1 = new Thread(() -> System.out.println("Hello"));
+    }
+}
+```
+
+```java
+public class regex {
+    public static void main(String[] args) {
+        int []arr = new int[10];
+        List<Integer> list = new ArrayList<>();
+
+        fillArr(list);
+        fillList(arr);
+
+        System.out.println(list);
+        System.out.println(Arrays.toString(arr));
+
+
+ 		// map method
+        arr = Arrays.stream(arr)
+                .map(a -> a * 2)
+                .toArray();
+
+        list = list.stream()
+                .map(a -> a * 2)
+                .collect(Collectors.toList());
+
+        // filter method
+        arr = Arrays.stream(arr)
+                .filter(a -> a % 2 == 0)
+                .toArray();
+
+        list = list.stream()
+                .filter(a -> a == 2)
+                .collect(Collectors.toList());
+
+        // forEach
+        Arrays.stream(arr)
+                .forEach(a -> System.out.println(a));
+
+        list.stream()
+                .forEach(a -> System.out.println(a));
+
+        // reduce
+        int sum = Arrays.stream(arr)
+                .reduce((acc, b) -> acc + b)
+                .getAsInt();
+        
+        int prod = list.stream()
+                .reduce((acc, b) -> acc * b)
+                .get();
+
+        System.out.println(list);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    public static void fillArr(List<Integer> list) {
+        for (int i = 0; i < 10; i++) {
+            list.add(i+1);
+        }
+    }
+    public static void fillList(int []arr) {
+        for (int i = 0; i < 10; i++) {
+            arr[i] = i + 1;
+        }
+    }
+}
+```
