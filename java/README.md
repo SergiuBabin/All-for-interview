@@ -1103,6 +1103,8 @@ public class regex {
 }
 ```
 
+#### stream()
+
 ```java
 public class regex {
     public static void main(String[] args) {
@@ -1118,7 +1120,7 @@ public class regex {
 
  		// map method
         arr = Arrays.stream(arr)
-                .map(a -> a * 2)
+                .map(a -> a == 2 ? a * 2 : a)
                 .toArray();
 
         list = list.stream()
