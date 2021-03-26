@@ -228,7 +228,7 @@ If you wanna use Annotations you need to enable component scanning in Spring con
 It will be recursively scanning packege.
 
 
-<span style="color:orange">@Override</span> -> Tell compiler we are overriding a method. At compilation time, compiler will check/verify the override.
+<font color='red'>@Override</font> -> Tell compiler we are overriding a method. At compilation time, compiler will check/verify the override.
 
 
 ***@Components*** -> We can use @Component across the application to mark the beans as Spring's managed components.
