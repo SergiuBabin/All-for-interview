@@ -85,7 +85,7 @@ Spring Bean
 -
 What is a Spring Bean?
 
-***A "Spring Bean" is simply a Java object.***
+*** A "Spring Bean" is simply a Java object.***
 
 - When Java objects are created by the Spring Container, then Spring refers to them as "Spring Beans".
 
@@ -106,7 +106,7 @@ In the early days, there was a term called "Java Beans". Spring Beans have a sim
 
 ![](BeanLifecycle.png)
 
-####Bean Lifecycle Methods/Hooks
+#### Bean Lifecycle Methods/Hooks
 * You can add custom code during ***bean initialization***
 	* Calling custom business logic methods
 	* Setting up handels to resources (db, sockets, file etc)
