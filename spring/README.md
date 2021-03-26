@@ -102,7 +102,7 @@ In the early days, there was a term called "Java Beans". Spring Beans have a sim
 	![](Bean_Scope.png)
 
 	
-###Bean Lifecycle
+### Bean Lifecycle
 
 ![](BeanLifecycle.png)
 
