@@ -229,7 +229,8 @@ It will be recursively scanning packege.
 
 ```java
 ***@Override***
-``` -> Tell compiler we are overriding a method. At compilation time, compiler will check/verify the override.
+``` 
+-> Tell compiler we are overriding a method. At compilation time, compiler will check/verify the override.
 
 ***@Components*** -> We can use @Component across the application to mark the beans as Spring's managed components.
 
